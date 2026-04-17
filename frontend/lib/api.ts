@@ -31,11 +31,13 @@ export async function fetchHealth(): Promise<{
 }
 
 export async function fetchHistory(ticker: string): Promise<StockDataPoint[]> {
-  // TODO: uncomment when backend ready
-  // const res = await fetch(`${API_BASE}/history/${ticker}`);
-  // if (!res.ok) throw new Error('Failed to fetch history');
-  // return res.json();
-  return getMockHistory(ticker); // mock
+  try {
+    const res = await fetch(`${API_BASE}/history/${ticker}`);
+    if (!res.ok) throw new Error('Failed to fetch history');
+    return res.json();
+  } catch {
+    return getMockHistory(ticker); // fallback to mock
+  }
 }
 
 export async function fetchPredictions(ticker: string): Promise<{
@@ -43,25 +45,32 @@ export async function fetchPredictions(ticker: string): Promise<{
   predictions: Array<{ date: string; predicted: number; actual: number }>;
   metrics: { rmse: number; mae: number; mape: number; r2: number };
 }> {
-  // TODO: uncomment when backend ready
-  // const res = await fetch(`${API_BASE}/predictions/${ticker}`);
-  // if (!res.ok) throw new Error('Failed to fetch predictions');
-  // return res.json();
-  return getMockPredictions(ticker); // mock
+  try {
+    const res = await fetch(`${API_BASE}/predictions/${ticker}`);
+    if (!res.ok) throw new Error('Failed to fetch predictions');
+    return res.json();
+  } catch {
+    return getMockPredictions(ticker); // fallback to mock
+  }
+}
 }
 
 export async function fetchClimateData(): Promise<ClimateDataPoint[]> {
-  // TODO: uncomment when backend ready
-  // const res = await fetch(`${API_BASE}/climate`);
-  // if (!res.ok) throw new Error('Failed to fetch climate data');
-  // return res.json();
-  return getMockClimate(); // mock
+  try {
+    const res = await fetch(`${API_BASE}/climate`);
+    if (!res.ok) throw new Error('Failed to fetch climate data');
+    return res.json();
+  } catch {
+    return getMockClimate(); // fallback to mock
+  }
 }
 
 export async function fetchSHAP(): Promise<SHAPFeature[]> {
-  // TODO: uncomment when backend ready
-  // const res = await fetch(`${API_BASE}/features/importance`);
-  // if (!res.ok) throw new Error('Failed to fetch SHAP values');
-  // return res.json();
-  return getMockSHAP(); // mock
+  try {
+    const res = await fetch(`${API_BASE}/features/importance`);
+    if (!res.ok) throw new Error('Failed to fetch SHAP values');
+    return res.json();
+  } catch {
+    return getMockSHAP(); // fallback to mock
+  }
 }
